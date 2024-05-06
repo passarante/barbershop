@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import prisma from "@/lib/db";
 import { getSlotTime } from "@/lib/helpers";
+import { createSlot } from "@/actions/slot-actions";
 
 export default function SlotCard({ slot, day }: SlotCardProps) {
   const [selected, setSelected] = useState(false);
@@ -14,9 +15,7 @@ export default function SlotCard({ slot, day }: SlotCardProps) {
     console.log(begTime, endTime);
 
     if (!selected) {
-      const result = await prisma.slot.create({
-        data: { date: day!, begTime, endTime, isOff: true },
-      });
+      await createSlot(day!, begTime, endTime);
     } else {
       await prisma.slot.findFirst({
         where: {

@@ -35,7 +35,7 @@ export default function DayShift({ day }: { day: Date | undefined }) {
     "24:00",
   ];
   return (
-    <div className="grid grid-cols-12 gap-4">
+    <div className="grid grid-cols-8 gap-4">
       {slots.map((slot: string) => (
         <SlotCard key={slot} slot={slot} day={day} />
       ))}
