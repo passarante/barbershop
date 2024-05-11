@@ -7,6 +7,7 @@ import React, { useState } from "react";
 function SlotsPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [showSlots, setShowSlots] = useState(false);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="mb-2 flex items-center gap-4">
@@ -29,7 +30,7 @@ function SlotsPage() {
             <CardTitle className="border-b border-pink-100 mb-4">
               <h3 className="text-2xl font-bold text-white">Slotlar</h3>
             </CardTitle>
-            <CardContent className="flex flex-1 justify-center  items-center">
+            <CardContent className="flex flex-1 justify-center items-center">
               <DayShift day={date} />
             </CardContent>
           </Card>

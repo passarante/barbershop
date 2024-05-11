@@ -35,3 +35,11 @@ model Appointment{
 
    slots Slot[]
 }
+model Settings{
+   id Int  @id @default(autoincrement())
+   slotTime Int
+   isSundayOff Boolean
+   begTime String
+   endTime String
+
+}
