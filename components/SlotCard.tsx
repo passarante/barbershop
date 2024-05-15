@@ -3,30 +3,23 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import prisma from "@/lib/db";
 import { getSlotTime } from "@/lib/helpers";
-import { createSlot } from "@/actions/slot-actions";
+import { createSlot, updateSlot } from "@/actions/slot-actions";
 
-export default function SlotCard({ slot, day }: SlotCardProps) {
-  const [selected, setSelected] = useState(false);
+export default function SlotCard({ slot }: SlotCardProps) {
+  const [selected, setSelected] = useState(
+    slot.isOff || slot.appointmentId !== null
+  );
 
   const handleClick = async () => {
     setSelected(!selected);
 
-    const { begTime, endTime } = getSlotTime(slot, day!);
-    console.log(begTime, endTime);
-
-    if (!selected) {
-      await createSlot(day!, begTime, endTime);
-    } else {
-      await prisma.slot.findFirst({
-        where: {
-          date: day!,
-          AND: {
-            begTime: begTime,
-            endTime: endTime,
-          },
-        },
+    updateSlot(slot.date, slot.begTime, slot.endTime, !selected)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }
   };
 
   return (
@@ -35,7 +28,9 @@ export default function SlotCard({ slot, day }: SlotCardProps) {
         className={`${selected ? "bg-black" : "bg-orange-500"}`}
         onClick={() => handleClick()}
       >
-        {slot}
+        {slot.begTime.getHours() +
+          ":" +
+          slot.begTime.getMinutes().toString().padStart(2, "0")}
       </Button>
     </div>
   );

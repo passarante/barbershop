@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Settings } from "@prisma/client";
 import axios from "axios";
 import React, { FormEvent, useEffect, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 function SettingsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +14,8 @@ function SettingsPage() {
   const [endTime, setEndTime] = useState("00:00");
   const [slotTime, setSlotTime] = useState(15);
   const [isSundayOff, setIsSundayOff] = useState(true);
+
+  const { toast } = useToast();
 
   useEffect(() => {
     axios
@@ -44,8 +47,12 @@ function SettingsPage() {
     const data: Settings = { id: 1, begTime, endTime, slotTime, isSundayOff };
 
     setSettings(data)
-      .then((res) => {
-        console.log(res);
+      .then((res: Settings | undefined | null) => {
+        if (res && res.id) {
+          toast({
+            title: "Ayarlar kaydedildi",
+          });
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -1,4 +1,6 @@
+import { Slot } from "@prisma/client";
+
 export type SlotCardProps = {
-    slot: string;
-    day: Date | undefined;
+    slot: Slot;
+
 };
