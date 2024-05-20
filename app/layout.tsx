@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider localization={trTR}>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <main className="bg-[#F6F6F6] flex flex-col items-center justify-center">
             {children}

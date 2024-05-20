@@ -3,12 +3,16 @@
 import prisma from "@/lib/db";
 import { getSettings } from "./setting-actions";
 import { Slot } from "@prisma/client";
-
+import moment from "moment";
 
 
 
 
 export async function createDailySlots(day: Date): Promise<Slot[] | undefined> {
+
+
+    const slotDate = day.toLocaleDateString()
+
 
     try {
 
@@ -20,16 +24,14 @@ export async function createDailySlots(day: Date): Promise<Slot[] | undefined> {
 
         let existingSlots = await prisma.slot.findMany({
             where: {
-                date: {
-                    gte: day,
-                    lte: new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1),
-                }
+                date: slotDate
             }
         })
 
 
 
         if (existingSlots.length === 0) {
+
 
             const begArr = settings.begTime.split(":");
             const beg = parseInt(begArr[0]) * 60 + parseInt(begArr[1]);
@@ -45,20 +47,20 @@ export async function createDailySlots(day: Date): Promise<Slot[] | undefined> {
                 // let hoursStr = hours < 10 ? "0" + hours : hours;
                 // let minStr = minutes < 10 ? "0" + minutes : minutes;
                 const begTime = new Date(day.getFullYear(), day.getMonth(), day.getDate(), hours, minutes, 0);
+
                 const endTime = new Date(begTime)
                 endTime.setMinutes(begTime.getMinutes() + settings.slotTime);
-                await createSlot(day, begTime, endTime);
+
+                //console.log("DATE", day);
+                await createSlot(slotDate, begTime, endTime);
 
             }
             existingSlots = await prisma.slot.findMany({
                 where: {
-                    date: {
-                        gte: day,
-                        lte: new Date(day.getFullYear(), day.getMonth(), day.getDate() + 1),
-                    }
+                    date: slotDate
                 }
             })
-            console.log("SLOTS", existingSlots);
+
 
         }
         return existingSlots;
@@ -75,7 +77,7 @@ export async function createDailySlots(day: Date): Promise<Slot[] | undefined> {
 
 
 export async function createSlot(
-    date: Date,
+    date: string,
     begTime: Date,
     endTime: Date,
     isOff?: boolean) {
@@ -91,7 +93,7 @@ export async function createSlot(
     }
 }
 
-export async function updateSlot(date: Date, begTime: Date, endTime: Date, isOff: boolean): Promise<Slot | undefined> {
+export async function updateSlot(date: string, begTime: Date, endTime: Date, isOff: boolean): Promise<Slot | undefined> {
     const existingSlot = await prisma.slot.findFirst({
         where: {
             date: date,

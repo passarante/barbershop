@@ -4,6 +4,8 @@ import SlotCard from "./SlotCard";
 import { getSettings } from "@/actions/setting-actions";
 import { Settings, Slot } from "@prisma/client";
 import { createDailySlots } from "@/actions/slot-actions";
+import { X } from "lucide-react";
+import { date } from "zod";
 
 export default function DayShift({ day }: { day: Date | undefined }) {
   const [begTime, setBegTime] = useState("");
@@ -12,6 +14,7 @@ export default function DayShift({ day }: { day: Date | undefined }) {
   const [slots, setSlots] = useState<Slot[]>([]);
 
   useEffect(() => {
+    console.log("child");
     createDailySlots(day!)
       .then((res: Slot[] | undefined) => {
         if (res) {
@@ -57,10 +60,10 @@ export default function DayShift({ day }: { day: Date | undefined }) {
     //     // }
     //   }
     // });
-  }, []);
+  }, [day]);
 
   return (
-    <div className="grid grid-cols-8 gap-4">
+    <div className="grid grid-cols-8 gap-4 relative">
       {slots.length > 0 &&
         slots.map((slot: Slot) => <SlotCard key={slot.id} slot={slot} />)}
     </div>
