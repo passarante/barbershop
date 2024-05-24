@@ -1,9 +1,8 @@
 import { SlotCardProps } from "@/types";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import prisma from "@/lib/db";
-import { getSlotTime } from "@/lib/helpers";
-import { createSlot, updateSlot } from "@/actions/slot-actions";
+
+import { updateSlot } from "@/actions/slot-actions";
 
 export default function SlotCard({ slot }: SlotCardProps) {
   const [selected, setSelected] = useState(

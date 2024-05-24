@@ -7,6 +7,7 @@ import {
   CalendarDays,
   Home,
   LogOut,
+  PenTool,
   Settings,
   Settings2,
   User2,
@@ -27,6 +28,11 @@ export default function Sidebar() {
           <Link href="/admin/slots">
             <li className="flex flex-row gap-2 items-center cursor-pointer hover:bg-slate-300 p-2 hover:rounded-lg mb-2 transition-all duration-500">
               <CalendarDays /> Slotlar
+            </li>
+          </Link>
+          <Link href="/admin/services">
+            <li className="flex flex-row gap-2 items-center cursor-pointer hover:bg-slate-300 p-2 hover:rounded-lg mb-2 transition-all duration-500">
+              <PenTool /> Hizmetler
             </li>
           </Link>
           <li className="flex flex-row gap-2 items-center cursor-pointer hover:bg-slate-300 p-2 hover:rounded-lg mb-2 transition-all duration-500">
