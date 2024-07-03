@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { trTR } from "@clerk/localizations";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <ClerkProvider localization={trTR}>
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
+          <Navbar />
           <main className="bg-[#F6F6F6] flex flex-col items-center justify-center">
             {children}
           </main>

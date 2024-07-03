@@ -29,18 +29,11 @@ function WorkingDays() {
               size="custom"
               className="border-black mt-4 hover:shadow-md"
             >
-              <span className="text-black">Şimdi Randevu Al</span>
+              <span className="text-black text-lg">Şimdi Randevu Al</span>
             </Button>
           </div>
         </div>
       </div>
-      <Button
-        variant="outline"
-        size="custom"
-        className="bg-transparent text-xl  transition-colors duration-300"
-      >
-        Hizmetlerimiz
-      </Button>
     </section>
   );
 }

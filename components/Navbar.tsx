@@ -6,7 +6,15 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { UserButton, useAuth } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useAuth,
+} from "@clerk/nextjs";
 
 function Navbar() {
   const pathname = usePathname();
@@ -53,19 +61,49 @@ function Navbar() {
               pathname === "/contact" && "text-[#FBB034]"
             )}
           >
-            <Link href="/contact" className="text-xl">
+            <Link href="/contact" className="text-xl mr-12">
               İletişim
             </Link>
           </li>
         </ul>
-        {auth.isSignedIn ? (
+        {/* {auth.isSignedIn ? (
           <UserButton />
         ) : (
-          <p className="text-white">Kayıt Ol | Giriş</p>
-        )}
-        <Button variant="custom" size="lg" className="ml-24 text-xl text-white">
-          Randevu Al
-        </Button>
+          <div className="flex gap-12">
+            <Link href="sign-in" className="text-white text-xl">
+              Giriş
+            </Link>
+            <Link href="sign-up" className="text-white text-xl">
+              Kayıt Ol
+            </Link>
+          </div>
+        )} */}
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="text-white text-xl mr-12 hover:text-[#FBB034] transition-colors duration-300">
+              Giriş
+            </button>
+          </SignInButton>
+          <SignUpButton mode="modal">
+            <button className="text-white text-xl hover:text-[#FBB034] transition-colors duration-300">
+              Kaydol
+            </button>
+          </SignUpButton>
+        </SignedOut>
+        <SignedIn>
+          <Link href={"/book"}>
+            <Button
+              variant="custom"
+              size="lg"
+              className="ml-24 text-xl text-white"
+            >
+              Randevu Al
+            </Button>
+          </Link>
+        </SignedIn>
       </div>
     </div>
   );

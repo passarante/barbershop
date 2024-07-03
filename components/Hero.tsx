@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 function Hero() {
   return (
@@ -16,13 +17,15 @@ function Hero() {
             with visible results.
           </p>
           <div className="flex gap-5 mt-10">
-            <Button
-              variant="custom"
-              size="custom"
-              className="text-white text-xl"
-            >
-              Randevu Al
-            </Button>
+            <Link href="/book">
+              <Button
+                variant="custom"
+                size="custom"
+                className="text-white text-xl"
+              >
+                Randevu Al
+              </Button>
+            </Link>
             <Button
               variant="outline"
               size="custom"
